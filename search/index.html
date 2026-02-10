@@ -25,7 +25,7 @@
         
     
     <!-- title -->
-    <title>赛博吴彦祖</title>
+    <title>search</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -72,77 +72,20 @@
     </div>
 </header>
     
-    <section id="about">
+    <article class="post page" itemscope itemtype="http://schema.org/BlogPosting">
     
-        <p>记录所思所想</p>
-
-            
-                
-                    <p>
-                        Find me on
-                            
-                                
-                                    
-                                        
-                                                    <a class="icon" target="_blank"
-                                                        href="https://github.com/paopao583077">
-                                                        <i class="fab fa-github" aria-hidden="true"></i>
-                                                    </a>
-                                                    
-                                                         and 
-                                                                
-                                                                    
-                                        
-                                            <a class="icon" target="_blank"
-                                                href="mailto:3102742172@qq.com">
-                                                <i class="fa fa-envelope"></i>
-                                            </a>
-                                            
-                                                        .
-                                                                
-                                                                    
-                    </p>
-                    
-</section>
-
-<section id="writing">
-    <span class="h1"><a href="/archives/">
-            Articles
-        </a></span>
-    
-            <ul class="post-list">
-                
-                    
-                                
-                                    
-                                        
-                                            <li class="post-item">
-                                                
-    <div class="meta">
+    <div class="content" itemprop="articleBody">
         
-            
-                <time datetime="2025-12-23T02:00:00.000Z"
-                      itemprop="datePublished">2025-12-23</time>
-            
+            <section id="search">
+    <form>
+        <input type="text" class="search-input" id="search-input" placeholder="Search...">
+    </form>
+    <div id="search-result"></div>
+    <p class="search-no-result">No results found.</p>
+</section>
         
     </div>
-
-                                                    <span>
-                                                        
-    
-        <a class="" href="/2025/12/23/hello-world/">Hello World</a>
-    
-
-                                                    </span>
-                                            </li>
-                                            
-            </ul>
-            
-</section>
-
-
-
-        
+</article>
     
     <!-- Footer hidden by user request -->
 </div>
@@ -166,6 +109,43 @@
 <script src="/js/main.js"></script>
 
 <!-- search -->
+
+    
+<script src="/js/search.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            var $inputArea = $("input#search-input");
+            var $resultArea = document.querySelector("div#search-result");
+
+            $inputArea.focus(function () {
+                var search_path = "search.xml";
+                if (search_path.length == 0) {
+                    search_path = "search.xml";
+                }
+                var path = "/" + search_path;
+                searchFunc(path, 'search-input', 'search-result');
+            });
+
+            $inputArea.keydown(function (e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                }
+            });
+
+            var observer = new MutationObserver(function (mutationsList, observer) {
+                if (mutationsList[0].addedNodes) {
+                    $(".search-no-result").show(200);
+                } else {
+                    $(".search-no-result").hide();
+                }
+            });
+
+            observer.observe($resultArea, {childList: true});
+
+        });
+    </script>
 
 </body>
 
